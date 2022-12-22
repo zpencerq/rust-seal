@@ -29,8 +29,12 @@ impl Cursor {
             self.x += delta.0;
             self.y += delta.1;
         } else {
-            self.x -= delta.0;
-            self.y -= delta.1;
+            if self.x > 0 {
+                self.x -= delta.0;
+            }
+            if self.y > 0 {
+                self.y -= delta.1;
+            }
         }
     }
 }

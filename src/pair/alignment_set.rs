@@ -43,7 +43,7 @@ where
         f: F,
     ) -> Result<AlignmentSet<T>, E>
     where
-        F: Fn(usize, usize) -> bool,
+        F: Fn(usize, usize) -> isize,
     {
         let width = x_len + 1;
         let height = y_len + 1;
@@ -59,8 +59,8 @@ where
             row[0] = strategy.total_score(strategy.insert_score() * ((y + 1) as isize));
             for x in 0..x_len {
                 let previous = (last_diagonal, row[x], row[x + 1]);
-                let equal = f(x, y);
-                let (steps, score) = Self::calculate_cell(&strategy, previous, equal);
+                let similarity = f(x, y);
+                let (steps, score) = Self::calculate_cell(&strategy, previous, similarity);
                 let cursor = Cursor { x: x + 1, y: y + 1 };
                 highscores.update(Highscore { cursor, score });
                 matrix.set_at(&cursor, steps);
@@ -76,14 +76,10 @@ where
     fn calculate_cell<S: Strategy>(
         strategy: &S,
         previous_scores: (isize, isize, isize),
-        equal: bool,
+        similarity: isize,
     ) -> (StepMask, isize) {
         let (mut align, mut delete, mut insert) = previous_scores;
-        align += if equal {
-            strategy.match_score()
-        } else {
-            strategy.mismatch_score()
-        };
+        align += similarity;
         delete += strategy.delete_score();
         insert += strategy.insert_score();
         let steps = StepMask::from_scores(align, delete, insert);

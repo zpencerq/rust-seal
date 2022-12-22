@@ -1,7 +1,6 @@
 use crate::pair::StepMask;
 
 pub trait Strategy {
-    fn match_score(&self) -> isize;
     fn mismatch_score(&self) -> isize;
     fn insert_score(&self) -> isize;
     fn delete_score(&self) -> isize;

@@ -3,16 +3,14 @@ use crate::pair::strategy::Strategy;
 
 #[derive(Clone, Debug)]
 pub struct NeedlemanWunsch {
-    pub equal: isize,
     pub align: isize,
     pub insert: isize,
     pub delete: isize,
 }
 
 impl NeedlemanWunsch {
-    pub fn new(equal: isize, align: isize, insert: isize, delete: isize) -> NeedlemanWunsch {
+    pub fn new(align: isize, insert: isize, delete: isize) -> NeedlemanWunsch {
         NeedlemanWunsch {
-            equal,
             align,
             insert,
             delete,
@@ -21,10 +19,6 @@ impl NeedlemanWunsch {
 }
 
 impl Strategy for NeedlemanWunsch {
-    fn match_score(&self) -> isize {
-        self.equal
-    }
-
     fn mismatch_score(&self) -> isize {
         self.align
     }

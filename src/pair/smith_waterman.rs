@@ -5,16 +5,14 @@ use crate::pair::strategy::Strategy;
 
 #[derive(Clone, Debug)]
 pub struct SmithWaterman {
-    equal: isize,
     align: isize,
     insert: isize,
     delete: isize,
 }
 
 impl SmithWaterman {
-    pub fn new(equal: isize, align: isize, insert: isize, delete: isize) -> SmithWaterman {
+    pub fn new(align: isize, insert: isize, delete: isize) -> SmithWaterman {
         SmithWaterman {
-            equal,
             align,
             insert,
             delete,
@@ -23,10 +21,6 @@ impl SmithWaterman {
 }
 
 impl Strategy for SmithWaterman {
-    fn match_score(&self) -> isize {
-        self.equal
-    }
-
     fn mismatch_score(&self) -> isize {
         self.align
     }
